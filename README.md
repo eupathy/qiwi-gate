@@ -34,7 +34,7 @@ Package dependency:
         "require": {
 	        "php": ">=5.3.0",
 	        "laravel/framework": "4.1.*",
-            "fintech-fab/bank-gate": "dev-master"
+            "fintech-fab/qiwi-gate": "dev-master"
         },
 	    "require-dev": {
 		    "phpunit/phpunit": "3.7.*",
