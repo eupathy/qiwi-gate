@@ -24,10 +24,24 @@ Route::filter('ff.qiwi.gate.auth.basic', function () {
 });
 
 Route::filter('ff.qiwi.gate.checkUser', function () {
-	$user = Config::get('ff-qiwi-shop::user_id');
-	if (!isset($user)) {
-		return Redirect::route('gateAuthError');
+
+	$routeError = 'gateAuthError';
+	$route = Route::current();
+	$isErrorPage = $routeError == $route->getAction()['as'];
+
+	$user = Config::get('ff-qiwi-gate::user_id');
+	$user = (int)$user;
+
+	if ($user <= 0) {
+
+		if (!$isErrorPage) {
+			return Redirect::route($routeError);
+		}
+
+	} elseif ($isErrorPage) {
+		return Redirect::route('billsTable');
 	}
+
 
 });
 
