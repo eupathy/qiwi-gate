@@ -13,7 +13,7 @@ class Merchants
 	 *
 	 * @return Merchant
 	 */
-	public static function NewMerchant($merchant, $data)
+	public static function NewMerchant(Merchant $merchant, $data)
 	{
 
 		$merchant->id = Config::get('ff-qiwi-gate::user_id');
@@ -24,6 +24,25 @@ class Merchants
 
 		return $merchant;
 
+	}
+
+	/**
+	 * @param Merchant $merchant
+	 * @param array    $data
+	 *
+	 * @return Merchant
+	 */
+	public static function ChangeMerchant(Merchant $merchant, $data)
+	{
+		$merchant->username = $data['username'];
+		$merchant->callback_url = $data['callback'];
+
+		if (null != $data['password']) {
+			$merchant->password = $data['password'];
+		}
+		$merchant->save();
+
+		return $merchant;
 	}
 
 } 

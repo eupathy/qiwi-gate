@@ -7,7 +7,9 @@ if (empty($content)) {
 <html>
 <head>
 	<?= View::make('ff-qiwi-gate::layouts.inc.head') ?>
-	<script src="/packages/fintech-fab/qiwi-gate/js/ActionPayment.js"></script>
+	<script type="application/javascript">
+		<?php require(__DIR__ . '/../layouts/inc/js/ActionPayment.js') ?>
+	</script>
 </head>
 <body>
 <div><?= $content ?></div>

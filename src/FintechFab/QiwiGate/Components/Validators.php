@@ -29,13 +29,25 @@ class Validators
 		return $rules;
 	}
 
-	public static function rulesForAccount()
+	public static function rulesForRegisterAcc()
 	{
 		$rules = array(
-			'username'        => 'required|alpha_dash',
+			'username'        => 'required',
 			'callback'        => 'url',
 			'password'        => 'required|min:4|alpha_dash',
 			'confirmPassword' => 'required|same:password',
+		);
+
+		return $rules;
+	}
+
+	public static function rulesForChangeAccData()
+	{
+		$rules = array(
+			'username'        => 'required',
+			'callback'        => 'url',
+			'password'        => 'min:4|alpha_dash',
+			'confirmPassword' => 'same:password',
 		);
 
 		return $rules;

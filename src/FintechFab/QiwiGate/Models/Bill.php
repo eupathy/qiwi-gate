@@ -163,4 +163,22 @@ class Bill extends Eloquent
 		return Bill::whereBillId($bill_id)->first();
 	}
 
+	/**
+	 * Делаает просроченным найденный счёт, и отдаёт просроченный счёт
+	 *
+	 * @param $bill_id
+	 *
+	 * @return Bill
+	 */
+	public static function doExpire($bill_id)
+	{
+		Bill::whereBillId($bill_id)
+			->whereStatus(self::C_STATUS_WAITING)
+			->update(
+				array('status' => self::C_STATUS_EXPIRED)
+			);
+
+		return Bill::whereBillId($bill_id)->first();
+	}
+
 }

@@ -3,7 +3,7 @@ $(document).ready(function () {
 		$.post('', function (data) {
 
 				if (data['error']) {
-					$('#error').html(data['error']);
+					$('#error').html(data['message']);
 					return;
 				} else {
 					$('#error').html('');

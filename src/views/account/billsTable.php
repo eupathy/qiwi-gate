@@ -20,7 +20,7 @@ use FintechFab\QiwiGate\Models\Bill;
 		<td><b>Срок действия</b></td>
 		<td><b>Провайдер</b></td>
 		<td><b>Статус</b></td>
-		<td><b>Возврат</b></td>
+		<td><b>Действия</b></td>
 	</tr>
 	<?php foreach ($bills as $bill): ?>
 		<tr>
@@ -37,9 +37,32 @@ use FintechFab\QiwiGate\Models\Bill;
 					echo Form::button('Возврат', array(
 						'type'  => 'button',
 						'class' => 'btn btn-primary btn-sm refund-button',
-						'id'    => 'bill-refunds_' . $bill->id,
+						'data-id' => $bill->id,
 					));
-				} ?>
+				} elseif ($bill->status == 'waiting') {
+					echo Form::button('Оплатить', array(
+						'type'      => 'button',
+						'class'     => 'btn btn-success btn-sm pay-button actionBtn',
+						'data-url'  => URL::route('postPay'),
+						'data-shop' => $bill->merchant_id,
+						'data-id'   => $bill->id,
+					));
+					echo Form::button('Отменить', array(
+						'type'      => 'button',
+						'class'     => 'btn btn-danger btn-sm cancel-button actionBtn',
+						'data-url'  => URL::route('postCancelBill'),
+						'data-shop' => $bill->merchant_id,
+						'data-id'   => $bill->id,
+					));
+					echo Form::button('Посрочить', array(
+						'type'      => 'button',
+						'class'     => 'btn btn-warning btn-sm expire-button actionBtn',
+						'data-url'  => URL::route('postExpireBill'),
+						'data-shop' => $bill->merchant_id,
+						'data-id'   => $bill->id,
+					));
+				}
+				?>
 			</td>
 		</tr>
 		<tr id="table-refund-<?= $bill->id ?>" style="display: none;">
@@ -49,3 +72,5 @@ use FintechFab\QiwiGate\Models\Bill;
 	<?php endforeach ?>
 </table>
 <?= $bills->links() ?>
+<div id="message" class="text-center"></div>
+

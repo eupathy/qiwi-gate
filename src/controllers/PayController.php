@@ -47,6 +47,7 @@ class PayController extends BaseController
 		$provider_id = Input::get('shop');
 		$bill = Bill::getBill($bill_id, $provider_id);
 
+		//Предполагаем ошибку статуса
 		$error = 'Ошибка оплаты, проверьте статус.';
 
 		if ($bill) {
@@ -73,11 +74,13 @@ class PayController extends BaseController
 			}
 
 		} else {
+			//Меняем ошибку на Счёт не найден
 			$error = 'Счет не найден.';
 		}
 
 		return array(
-			'error' => $error,
+			'error'   => true,
+			'message' => $error,
 		);
 
 	}

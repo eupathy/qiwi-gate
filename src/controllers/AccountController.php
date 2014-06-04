@@ -16,7 +16,9 @@ class AccountController extends BaseController
 	public $layout = 'account';
 
 	/**
-	 * @return \Illuminate\View\View
+	 * Главная страница аккаунта QIWI
+	 *
+*@return \Illuminate\View\View
 	 */
 	public function index()
 	{
@@ -38,15 +40,17 @@ class AccountController extends BaseController
 	}
 
 	/**
-	 * @return array
+	 * Регистрация в QIWI
+	 *
+*@return array
 	 */
 	public function postRegistration()
 	{
 		$data = Input::all();
-		$validator = $this->validateData($data);
+		$errors = $this->getErrorFromRegData($data);
 
-		if ($validator) {
-			return $validator;
+		if ($errors) {
+			return $errors;
 		}
 		$newMerchant = new Merchant;
 		$merchant = Merchants::NewMerchant($newMerchant, $data);
@@ -63,16 +67,18 @@ class AccountController extends BaseController
 	}
 
 	/**
-	 * @return array
+	 * Изменить данные в аккаунте
+	 *
+*@return array
 	 */
 	public function postChangeData()
 	{
 		$data = Input::all();
 
 		//проверяем данные
-		$validator = $this->validateData($data);
-		if ($validator) {
-			return $validator;
+		$errors = $this->getErrorFromChangeData($data);
+		if ($errors) {
+			return $errors;
 		}
 
 		//Проверяем текущий пароль
@@ -87,9 +93,9 @@ class AccountController extends BaseController
 		}
 
 		//Изменяем данные
-		$merchant = Merchants::NewMerchant($currentMerchant, $data);
+		$merchant = Merchants::ChangeMerchant($currentMerchant, $data);
 		if ($merchant) {
-			$message = 'Вы успешно зарегистрировались.';
+			$message = 'Данные изменены';
 
 			return array('message' => $message);
 		}
@@ -102,6 +108,7 @@ class AccountController extends BaseController
 	}
 
 	/**
+	 * Страница с таблицей счетов
 	 * @return \Illuminate\View\View
 	 */
 	public function billsTable()
@@ -117,6 +124,12 @@ class AccountController extends BaseController
 		return $this->make('billsTable', array('bills' => $bills));
 	}
 
+	/**
+	 * Если есть, отдаёт таблицу с возвратами
+	 * @param $bill_id
+	 *
+	 * @return \Illuminate\View\View|string
+	 */
 	public function GetRefundTable($bill_id)
 	{
 		$user_id = Config::get('ff-qiwi-gate::user_id');
@@ -133,13 +146,75 @@ class AccountController extends BaseController
 	}
 
 	/**
-	 * @param $data
+	 * Отмена счёта
 	 *
-	 * @return array|bool
+	 * @return array
 	 */
-	private function validateData($data)
+	public function postCancelBill()
 	{
-		$validator = Validator::make($data, Validators::rulesForAccount(), Validators::messagesForErrors());
+		$bill_id = Input::get('transaction');
+		$provider_id = Input::get('shop');
+		$bill = Bill::getBill($bill_id, $provider_id);
+
+		//предполагаем ошибку
+		$error = 'Счёт не найден';
+
+		if ($bill) {
+			$rejectedBill = $bill->doCancel($bill->id);
+			//Если счёт отмеён, то отдаём успех
+			if ($rejectedBill->status == Bill::C_STATUS_REJECTED) {
+				return array(
+					'message' => 'Счёт отменён',
+				);
+			}
+			$error = 'Счёт не отменён. Проверьте статус.';
+		}
+
+		//Отдаём ошибку
+		return array(
+			'error'   => true,
+			'message' => $error,
+		);
+	}
+
+	public function postExpireBill()
+	{
+		$bill_id = Input::get('transaction');
+		$provider_id = Input::get('shop');
+		$bill = Bill::getBill($bill_id, $provider_id);
+
+		//предполагаем ошибку
+		$error = 'Счёт не найден';
+
+		if ($bill) {
+			$expiredBill = $bill->doExpire($bill->id);
+			//Если счёт просрочен, то отдаём успех
+			if ($expiredBill->status == Bill::C_STATUS_EXPIRED) {
+				return array(
+					'message' => 'Счёт просрочен',
+				);
+			}
+			$error = 'Счёт не просрочен. Проверьте статус.';
+		}
+
+		//Отдаём ошибку
+		return array(
+			'error'   => true,
+			'message' => $error,
+		);
+	}
+
+	/**
+	 * Проверка ввода при регистрации
+	 *
+*@param $data
+	 *
+	 * @return array
+	 */
+	private function getErrorFromRegData($data)
+	{
+		$data['username'] = e($data['username']);
+		$validator = Validator::make($data, Validators::rulesForRegisterAcc(), Validators::messagesForErrors());
 		$userMessages = $validator->messages();
 
 		if ($validator->fails()) {
@@ -154,7 +229,35 @@ class AccountController extends BaseController
 			return $result;
 		}
 
-		return false;
+		return null;
+	}
+
+	/**
+	 * Проверка ввода при смене данных
+	 *
+	 * @param $data
+	 *
+	 * @return null
+	 */
+	private function getErrorFromChangeData($data)
+	{
+		$data['username'] = e($data['username']);
+		$validator = Validator::make($data, Validators::rulesForChangeAccData(), Validators::messagesForErrors());
+		$userMessages = $validator->messages();
+
+		if ($validator->fails()) {
+			$result['errors'] = array(
+				'id'              => '',
+				'username'        => $userMessages->first('username'),
+				'callback'        => $userMessages->first('callback'),
+				'password'        => $userMessages->first('password'),
+				'confirmPassword' => $userMessages->first('confirmPassword'),
+			);
+
+			return $result;
+		}
+
+		return null;
 	}
 
 } 

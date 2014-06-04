@@ -59,9 +59,20 @@ Route::group(
 			'as'   => 'billsTable',
 			'uses' => 'AccountController@billsTable'
 		));
+
 		Route::get('account/billsTable/getRefund/{bill_id}', array(
 			'as'   => 'GetRefundTable',
 			'uses' => 'AccountController@GetRefundTable'
+		));
+
+		Route::post('account/billsTable/expireBill', array(
+			'as'   => 'postExpireBill',
+			'uses' => 'AccountController@postExpireBill'
+		));
+
+		Route::post('account/billsTable/cancelBill', array(
+			'as'   => 'postCancelBill',
+			'uses' => 'AccountController@postCancelBill'
 		));
 
 		Route::get('authError', array(
