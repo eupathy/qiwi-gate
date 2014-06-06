@@ -71,8 +71,8 @@ class RestRefundController extends Controller
 			'amount'    => $refundAmount,
 			'status'    => 'processing',
 		);
-		$refund = Refunds::NewRefund($data);
-		$data['user'] = $refund->bill->user;
+		Refunds::NewRefund($data);
+		$data['user'] = $bill->user;
 		$data['error'] = Catalog::C_WITHOUT_ERRORS;
 
 		return $this->responseFromGate($data);
@@ -92,7 +92,7 @@ class RestRefundController extends Controller
 	 */
 	public function show($provider_id, $bill_id, $refund_id)
 	{
-		if (!Bill::getBill($bill_id, $provider_id)) {
+		if (!$bill = Bill::getBill($bill_id, $provider_id)) {
 			$data['error'] = Catalog::C_BILL_NOT_FOUND;
 
 			return $this->responseFromGate($data);
@@ -114,6 +114,7 @@ class RestRefundController extends Controller
 		}
 
 		$data = $this->dataFromObj($refund);
+		$data['user'] = $bill->user;
 		$data['error'] = 0;
 
 		return $this->responseFromGate($data);
@@ -157,7 +158,6 @@ class RestRefundController extends Controller
 		$data['refund_id'] = $refund->refund_id;
 		$data['amount'] = $refund->amount;
 		$data['status'] = $refund->status;
-		$data['user'] = $refund->bill->user;
 
 		foreach ($data as $key => $value) {
 			if ($value === null) {

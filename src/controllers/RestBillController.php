@@ -7,6 +7,7 @@ use FintechFab\QiwiGate\Components\Bills;
 use FintechFab\QiwiGate\Components\Catalog;
 use FintechFab\QiwiGate\Components\Validators;
 use FintechFab\QiwiGate\Models\Bill;
+use FintechFab\QiwiGate\Queue\SendCallback;
 use Input;
 use Request;
 use Response;
@@ -93,8 +94,9 @@ class RestBillController extends Controller
 			return $this->responseFromGate($data);
 		}
 
-		//Если счёт стал просроченным - обновляем счёт (т.к. изменился статус)
-		if ($bill->isExpired()) {
+		//Если счёт стал просроченным - меняем статус, кидаем callback и обновляем счёт
+		if ($bill->isExpired() && $bill->doExpire($bill_id)) {
+			$this->sendCallback($bill_id);
 			$bill = Bill::find($bill->id);
 		}
 
@@ -129,9 +131,11 @@ class RestBillController extends Controller
 
 				return $this->responseFromGate($data);
 			}
-			//Если статус waiting - отменяем счёт и отдаём его в ответе
-			if ($bill->isWaiting()) {
-				$canceledBill = $bill->doCancel($bill_id);
+			//Если статус waiting - отменяем счёт, кидаем callback и отдаём счёт в ответе
+			if ($bill->isWaiting() && $bill->doCancel($bill_id)) {
+
+				$this->sendCallback($bill_id);
+				$canceledBill = Bill::whereBillId($bill_id)->first();
 				$data = $this->dataFromObj($canceledBill);
 				$data['error'] = 0;
 
@@ -174,6 +178,16 @@ class RestBillController extends Controller
 		$method = Request::method();
 
 		return ($method === 'PUT');
+	}
+
+	/**
+	 * Отправить callback
+	 *
+	 * @param $bill_id
+	 */
+	public function sendCallback($bill_id)
+	{
+		SendCallback::jobBillToQueue($bill_id);
 	}
 
 	/**

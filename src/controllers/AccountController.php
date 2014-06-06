@@ -7,6 +7,8 @@ use FintechFab\QiwiGate\Components\Merchants;
 use FintechFab\QiwiGate\Components\Validators;
 use FintechFab\QiwiGate\Models\Bill;
 use FintechFab\QiwiGate\Models\Merchant;
+use FintechFab\QiwiGate\Models\Refund;
+use FintechFab\QiwiGate\Queue\SendCallback;
 use Input;
 use Validator;
 
@@ -132,12 +134,12 @@ class AccountController extends BaseController
 	 */
 	public function GetRefundTable($bill_id)
 	{
-		$user_id = Config::get('ff-qiwi-gate::user_id');
-		$bill = Bill::whereMerchantId($user_id)->find($bill_id);
+		$provider_id = Config::get('ff-qiwi-gate::user_id');
+		$bill = Bill::getBill($bill_id, $provider_id);
 		if (!$bill) {
 			return 'Нет такого счёта';
 		}
-		$refunds = $bill->refunds()->get();
+		$refunds = Refund::whereBillId($bill_id)->get();
 		if (count($refunds) == 0) {
 			return 'Возвратов нет';
 		}
@@ -160,9 +162,10 @@ class AccountController extends BaseController
 		$error = 'Счёт не найден';
 
 		if ($bill) {
-			$rejectedBill = $bill->doCancel($bill->id);
-			//Если счёт отмеён, то отдаём успех
-			if ($rejectedBill->status == Bill::C_STATUS_REJECTED) {
+			//Если счёт отмеён, то кидаем callback и отдаём успех
+			if ($bill->doCancel($bill_id)) {
+				$this->sendCallback($bill_id);
+
 				return array(
 					'message' => 'Счёт отменён',
 				);
@@ -187,9 +190,10 @@ class AccountController extends BaseController
 		$error = 'Счёт не найден';
 
 		if ($bill) {
-			$expiredBill = $bill->doExpire($bill->id);
-			//Если счёт просрочен, то отдаём успех
-			if ($expiredBill->status == Bill::C_STATUS_EXPIRED) {
+			//Если счёт просрочен, то кидаем callback и отдаём успех
+			if ($bill->doExpire($bill_id)) {
+				$this->sendCallback($bill_id);
+
 				return array(
 					'message' => 'Счёт просрочен',
 				);
@@ -258,6 +262,16 @@ class AccountController extends BaseController
 		}
 
 		return null;
+	}
+
+	/**
+	 * Отправить callback
+	 *
+	 * @param $bill_id
+	 */
+	public function sendCallback($bill_id)
+	{
+		SendCallback::jobBillToQueue($bill_id);
 	}
 
 } 

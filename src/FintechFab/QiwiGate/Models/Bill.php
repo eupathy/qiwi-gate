@@ -18,6 +18,7 @@ use Eloquent;
  * @property string  $status
  * @property string  $created_at
  * @property string  $updated_at
+ * @property Merchant  $merchant
  *
  * @method static Bill find()
  * @method static Bill where()
@@ -79,7 +80,7 @@ class Bill extends Eloquent
 
 
 	/**
-	 * счет просрочен? Если да то меняем статус счёта
+	 * счет просрочен?
 	 *
 	 * @return bool
 	 */
@@ -87,14 +88,11 @@ class Bill extends Eloquent
 	{
 
 		if (
-			$this->status == 'waiting' &&
+			$this->status == self::C_STATUS_WAITING &&
 			$this->lifetime != null &&
 			$this->lifetime != '0000-00-00 00:00:00' &&
 			strtotime($this->lifetime) <= time()
 		) {
-			Bill::whereBillId($this->bill_id)
-				->whereStatus(self::C_STATUS_WAITING)
-				->update(array('status' => self::C_STATUS_EXPIRED));
 
 			return true;
 		}
@@ -125,7 +123,7 @@ class Bill extends Eloquent
 	}
 
 	/**
-	 * оплатить найденный счёт
+	 * Оплатить найденный счёт
 	 *
 	 * @param $billId
 	 *
@@ -146,7 +144,7 @@ class Bill extends Eloquent
 	}
 
 	/**
-	 * Отменяет найденный счёт, и отдаёт отменённвй счёт
+	 * Отменить найденный счёт
 	 *
 	 * @param $bill_id
 	 *
@@ -154,17 +152,21 @@ class Bill extends Eloquent
 	 */
 	public static function doCancel($bill_id)
 	{
-		Bill::whereBillId($bill_id)
+		$isUpdate = Bill::whereBillId($bill_id)
 			->whereStatus(self::C_STATUS_WAITING)
 			->update(
 				array('status' => self::C_STATUS_REJECTED)
 			);
 
-		return Bill::whereBillId($bill_id)->first();
+		if ($isUpdate) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
-	 * Делаает просроченным найденный счёт, и отдаёт просроченный счёт
+	 * Делаает просроченным найденный счёт
 	 *
 	 * @param $bill_id
 	 *
@@ -172,13 +174,17 @@ class Bill extends Eloquent
 	 */
 	public static function doExpire($bill_id)
 	{
-		Bill::whereBillId($bill_id)
+		$isUpdate = Bill::whereBillId($bill_id)
 			->whereStatus(self::C_STATUS_WAITING)
 			->update(
 				array('status' => self::C_STATUS_EXPIRED)
 			);
 
-		return Bill::whereBillId($bill_id)->first();
+		if ($isUpdate) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

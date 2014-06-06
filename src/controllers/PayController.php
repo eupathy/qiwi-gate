@@ -3,9 +3,8 @@
 namespace FintechFab\QiwiGate\Controllers;
 
 use FintechFab\QiwiGate\Models\Bill;
-use FintechFab\QiwiGate\Models\Merchant;
+use FintechFab\QiwiGate\Queue\SendCallback;
 use Input;
-use Queue;
 use View;
 
 class PayController extends BaseController
@@ -52,21 +51,9 @@ class PayController extends BaseController
 
 		if ($bill) {
 
-			if (Bill::doPay($bill->bill_id)) {
+			if (Bill::doPay($bill_id)) {
 
-				$merchant = Merchant::find($provider_id);
-				Queue::connection('ff-qiwi-gate')->push('FintechFab\QiwiGate\Queue\SendCallback', array(
-					'url'      => $merchant->callback_url,
-					'bill_id'  => $bill_id,
-					'status'   => Bill::C_STATUS_PAID,
-					'error'    => 0,
-					'amount'   => $bill->amount,
-					'user'     => $bill->user,
-					'prv_name' => $bill->prv_name,
-					'ccy'      => $bill->ccy,
-					'comment'  => $bill->comment,
-					'command'  => 'bill',
-				));
+				SendCallback::jobBillToQueue($bill_id);
 
 				return array(
 					'message' => 'Счёт успешно оплачен.',

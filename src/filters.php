@@ -26,8 +26,8 @@ Route::filter('ff.qiwi.gate.auth.basic', function () {
 Route::filter('ff.qiwi.gate.checkUser', function () {
 
 	$routeError = 'gateAuthError';
-	$route = Route::current();
-	$isErrorPage = $routeError == $route->getAction()['as'];
+	$routeAction = Route::current()->getAction();
+	$isErrorPage = $routeError == $routeAction['as'];
 
 	$user = Config::get('ff-qiwi-gate::user_id');
 	$user = (int)$user;

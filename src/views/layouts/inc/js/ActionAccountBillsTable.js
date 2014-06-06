@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 		$.get('billsTable/getRefund/' + id,
 			function (data) {
-				tableRefund.append(data);
+				tableRefund.empty().append(data);
 			}
 		);
 
