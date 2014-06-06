@@ -43,6 +43,7 @@ class SendCallback
 			die();
 		}
 
+		Log::info('Результат curl:', array('result' => $result));
 		$cnt = $job->attempts();
 
 		if ($cnt > 50) {

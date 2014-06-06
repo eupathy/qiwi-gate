@@ -30,12 +30,12 @@ class Headers
 	{
 		$isSuccess = false;
 
-		$merchant_data = self::GetMerchant();
+		$merchantData = self::GetMerchant();
 
-		if ($merchant_data) {
+		if ($merchantData) {
 
-			$merchant = Merchant::find($merchant_data['login']);
-			if ($merchant && $merchant->password == $merchant_data['password']) {
+			$merchant = Merchant::find($merchantData['login']);
+			if ($merchant && $merchant->password == $merchantData['password']) {
 				$isSuccess = true;
 			}
 		}
