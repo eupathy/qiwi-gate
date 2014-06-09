@@ -1,9 +1,9 @@
 Qiwi Gate Emulator
 =========
 
-Gate emulates the qiwi system (REST Protocol).
+Сервер эмулирует работу QIWI через REST протокол.
 
-# Requirements
+# Требования
 
 - php >=5.3.0
 - Laravel Framework 4.1.*
@@ -11,16 +11,16 @@ Gate emulates the qiwi system (REST Protocol).
 - Laravel queue driver configuration
 - User auth identifier in your web project
 
-# Uses
+# Используется
 
 - bootstrap cdn
 - jquery cdn
 
-# Installation
+# Установка
 
 ## Composer
 
-Package only:
+Только пакет:
 
     {
         "require": {
@@ -28,7 +28,7 @@ Package only:
     },
     }
 
-Package dependency:
+Пакет с зависимостями:
 
     {
         "require": {
@@ -41,26 +41,26 @@ Package dependency:
 	    },
     }
 
-Run it:
+Запустите:
 
 	composer update
 	php artisan dump-autoload
 
-## Local configuration
+## Локальные настройки
 
-Add service provider to `config/app.php`:
+Добавьте service provider в `config/app.php`:
 
 	'providers' => array(
 		'FintechFab\QiwiGate\QiwiGateServiceProvider'
 	)
 
-### Queue connection named 'ff-bank-em', e.g. iron:
+### Соединение для очереди назовите  'ff-qiwi-gate', например в iron:
 
-Add to `config/#env#/queue.php`:
+Добавьте в `config/#env#/queue.php`:
 
 ```PHP
 'connections' => array(
-	'ff-bank-em' => array(
+	'ff-qiwi-gate' => array(
 		'driver'  => 'iron',
 		'project' => 'your-iron-project-id',
 		'token'   => 'your-iron-token',
@@ -69,14 +69,14 @@ Add to `config/#env#/queue.php`:
 ),
 ```
 
-Run the queue worker:
+Запустите обработчик очередей:
 
 	php artisan queue:listen --queue="ff-qiwi-gate" ff-qiwi-gate
 
 
-### Database connection named 'ff-qiwi-gate'
+### Соединение с базой данных назовите 'ff-qiwi-gate'
 
-Add to `config/#env#/database.php`:
+Добавьте в `config/#env#/database.php`:
 
 ```PHP
 'connections' => array(
@@ -94,24 +94,27 @@ Add to `config/#env#/database.php`:
 ),
 ```
 
-## Migrations
+## Миграции
+
+Выполните миграции базы:
 
 	php artisan migrate --package="fintech-fab/qiwi-gate" --database="ff-qiwi-gate"
 
-### Custom user auth identifier:
+### Получение id пользователя для авторизации:
 
-Default, user auth id detect by `Auth::user()->getAuthIdentifier()`.
-Your can set integer value (e.g. `'user_id' => 1`), or use some your function with identifier return;
+По умолчанию id пользователя определяется `Auth::user()->getAuthIdentifier()`.
+Вы можете установить целочисленное значение (например `'user_id' => 1`), или использовать какую-то вашу функцию
+определения id пользователя.
 
-For this, publish configuration from package:
+Для этого опубликуйте настройки из пакета:
 
-	php artisan config:publish fintech-fab/qiwi-gate
+	php artisan config:publish --path=vendor/fintech-fab/qiwi-gate/src/config fintech-fab/qiwi-gate
 
-And change user auth identifier for your web project `app/config/packages/fintech-fab/qiwi-gate/config.php`:
+И измените настройки получения id пользователя для вашего проекта `app/config/packages/fintech-fab/qiwi-gate/config.php`:
 
 	'user_id' => 'user-auth-identifier',
 
-## Development How to
+## Для разработчиков
 
 ### Workbench migrations
 
