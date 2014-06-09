@@ -54,6 +54,26 @@ Add service provider to `config/app.php`:
 		'FintechFab\QiwiGate\QiwiGateServiceProvider'
 	)
 
+### Queue connection named 'ff-bank-em', e.g. iron:
+
+Add to `config/#env#/queue.php`:
+
+```PHP
+'connections' => array(
+	'ff-bank-em' => array(
+		'driver'  => 'iron',
+		'project' => 'your-iron-project-id',
+		'token'   => 'your-iron-token',
+		'queue'   => 'your-iron-queue',
+	),
+),
+```
+
+Run the queue worker:
+
+	php artisan queue:listen --queue="ff-qiwi-gate" ff-qiwi-gate
+
+
 ### Database connection named 'ff-qiwi-gate'
 
 Add to `config/#env#/database.php`:
