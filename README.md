@@ -1,7 +1,11 @@
 Qiwi Gate Emulator
 =========
 
-Сервер эмулирует работу QIWI через REST протокол.
+Сервер эмулирует работу сервера QIWI через REST протокол.
+Обращаться к серверу QIWI можно используя пакеты эмуляции интернет магизина и SDK:
+
+- QIWI-shop: https://github.com/fintech-fab/qiwi-shop
+- QIWI-SDK: https://github.com/fintech-fab/qiwi-sdk
 
 # Требования
 
