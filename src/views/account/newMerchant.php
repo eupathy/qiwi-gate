@@ -58,12 +58,28 @@
 					'placeholder' => 'Callback',
 					'class'       => 'form-control',
 					'id'          => 'inputCallback',
-					'required'    => '',
 				));
 				?>
 				<div class="text-danger text-center" id="errorCallback"></div>
 			</div>
 		</div>
+
+		<div class="form-group row">
+			<label for="inputKey" class="col-sm-3 control-label">Ключ для callback</label>
+
+			<div class="col-sm-7">
+
+				<?=
+				Form::input('text', 'key', '', array(
+					'placeholder' => 'Если не указать будет выдан автоматически',
+					'class'       => 'form-control',
+					'id'          => 'inputKey',
+				));
+				?>
+				<div class="text-danger text-center" id="errorKey"></div>
+			</div>
+		</div>
+
 		<div class="form-group row">
 			<label for="inputPassword" class="col-sm-3 control-label">Пароль</label>
 

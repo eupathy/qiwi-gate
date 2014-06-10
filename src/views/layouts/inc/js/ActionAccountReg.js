@@ -3,6 +3,7 @@ $(document).ready(function () {
 		var user_id = $('#inputId').val();
 		var username = $('#inputUsername').val();
 		var callback = $('#inputCallback').val();
+		var key = $('#inputKey').val();
 		var password = $('#inputPassword').val();
 		var confirmPassword = $('#inputConfirmPassword').val();
 		$.ajax({
@@ -11,6 +12,7 @@ $(document).ready(function () {
 			data: {user_id: user_id,
 				username: username,
 				callback: callback,
+				key: key,
 				password: password,
 				confirmPassword: confirmPassword
 			},
@@ -19,6 +21,7 @@ $(document).ready(function () {
 					$('#errorId').html(data['errors']['id']);
 					$('#errorUsername').html(data['errors']['username']);
 					$('#errorCallback').html(data['errors']['callback']);
+					$('#errorKey').html(data['errors']['key']);
 					$('#errorPassword').html(data['errors']['password']);
 					$('#errorConfirmPassword').html(data['errors']['confirmPassword']);
 					return;

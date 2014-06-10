@@ -23,20 +23,6 @@ use FintechFab\QiwiGate\Models\Merchant;
 
 				)); ?>
 				<div class="form-group row">
-					<?= Form::label('inputCallback', 'Callback', array('class' => 'col-sm-3 control-label')) ?>
-					<div class="col-sm-9">
-						<?=
-						Form::input('text', 'callback', $merchant->callback_url, array(
-							'placeholder' => 'Callback адрес',
-							'class'       => 'form-control',
-							'id'          => 'inputCallback',
-							'required'    => 'required',
-						));
-						?>
-					</div>
-					<div id="errorCallback" class="text-danger text-center"></div>
-				</div>
-				<div class="form-group row">
 					<?= Form::label('inputUsername', 'Имя', array('class' => 'col-sm-3 control-label')) ?>
 					<div class="col-sm-9">
 						<?=
@@ -49,6 +35,32 @@ use FintechFab\QiwiGate\Models\Merchant;
 						?>
 					</div>
 					<div id="errorUsername" class="text-danger text-center"></div>
+				</div>
+				<div class="form-group row">
+					<?= Form::label('inputCallback', 'Callback', array('class' => 'col-sm-3 control-label')) ?>
+					<div class="col-sm-9">
+						<?=
+						Form::input('text', 'callback', $merchant->callback_url, array(
+							'placeholder' => 'Callback адрес',
+							'class'       => 'form-control',
+							'id'          => 'inputCallback',
+						));
+						?>
+					</div>
+					<div id="errorCallback" class="text-danger text-center"></div>
+				</div>
+				<div class="form-group row">
+					<?= Form::label('inputKey', 'Ключ', array('class' => 'col-sm-3 control-label')) ?>
+					<div class="col-sm-9">
+						<?=
+						Form::input('text', 'key', $merchant->key, array(
+							'placeholder' => 'Ключ',
+							'class'       => 'form-control',
+							'id'          => 'inputKey',
+						));
+						?>
+					</div>
+					<div id="errorKey" class="text-danger text-center"></div>
 				</div>
 				<div class="form-group row">
 					<?= Form::label('inputPassword', 'Новый пароль', array('class' => 'col-sm-3 control-label')) ?>

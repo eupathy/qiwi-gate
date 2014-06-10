@@ -23,15 +23,21 @@ use FintechFab\QiwiGate\Models\Merchant;
 			</div>
 
 			<div class="row">
+				<p class="col-md-6">Имя пользователя:</p>
+
+				<p class="col-md-5" id="username"><?= $merchant->username ?></p>
+			</div>
+
+			<div class="row">
 				<p class="col-md-6">Callback:</p>
 
 				<p class="col-md-6" id="callback"><?= $merchant->callback_url ?></p>
 			</div>
 
 			<div class="row">
-				<p class="col-md-6">Имя пользователя:</p>
+				<p class="col-md-6">Ключ:</p>
 
-				<p class="col-md-5" id="username"><?= $merchant->username ?></p>
+				<p class="col-md-5" id="key"><?= $merchant->key ?></p>
 			</div>
 
 			<div class="col-md-offset-6 col-md-6">

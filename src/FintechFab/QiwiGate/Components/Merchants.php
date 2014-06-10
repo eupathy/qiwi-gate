@@ -20,6 +20,9 @@ class Merchants
 		$merchant->username = $data['username'];
 		$merchant->callback_url = $data['callback'];
 		$merchant->password = $data['password'];
+		$merchant->key = $data['key'] != null
+			? $data['key']
+			: md5(Config::get('ff-qiwi-gate::user_id') . $data['password'] . $data['username']);
 		$merchant->save();
 
 		return $merchant;
@@ -36,6 +39,7 @@ class Merchants
 	{
 		$merchant->username = $data['username'];
 		$merchant->callback_url = $data['callback'];
+		$merchant->key = $data['key'];
 
 		if (null != $data['password']) {
 			$merchant->password = $data['password'];
