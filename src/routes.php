@@ -84,3 +84,9 @@ Route::group(
 
 );
 
+Route::get('qiwi/gate/about', array(
+	'as'   => 'aboutQiwiGate',
+	'uses' => 'FintechFab\QiwiGate\Controllers\AccountController@about'
+));
+
+

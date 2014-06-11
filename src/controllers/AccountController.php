@@ -20,7 +20,7 @@ class AccountController extends BaseController
 	/**
 	 * Главная страница аккаунта QIWI
 	 *
-*@return \Illuminate\View\View
+	 * @return \Illuminate\View\View
 	 */
 	public function index()
 	{
@@ -31,6 +31,11 @@ class AccountController extends BaseController
 		}
 
 		return $this->make('index', array('merchant' => $merchant));
+	}
+
+	public function about()
+	{
+		$this->make('about');
 	}
 
 	/**
@@ -44,7 +49,7 @@ class AccountController extends BaseController
 	/**
 	 * Регистрация в QIWI
 	 *
-*@return array
+	 * @return array
 	 */
 	public function postRegistration()
 	{
@@ -71,7 +76,7 @@ class AccountController extends BaseController
 	/**
 	 * Изменить данные в аккаунте
 	 *
-*@return array
+	 * @return array
 	 */
 	public function postChangeData()
 	{
@@ -111,6 +116,7 @@ class AccountController extends BaseController
 
 	/**
 	 * Страница с таблицей счетов
+	 *
 	 * @return \Illuminate\View\View
 	 */
 	public function billsTable()
@@ -128,6 +134,7 @@ class AccountController extends BaseController
 
 	/**
 	 * Если есть, отдаёт таблицу с возвратами
+	 *
 	 * @param $bill_id
 	 *
 	 * @return \Illuminate\View\View|string
@@ -211,7 +218,7 @@ class AccountController extends BaseController
 	/**
 	 * Проверка ввода при регистрации
 	 *
-*@param $data
+	 * @param $data
 	 *
 	 * @return array
 	 */

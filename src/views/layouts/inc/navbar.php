@@ -21,6 +21,9 @@ $logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAB
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
+					<li class=" <?= NavbarAction::isActive(URL::route('aboutQiwiGate')) ?> ">
+						<a href="<?= URL::route('aboutQiwiGate') ?>">About</a>
+					</li>
 					<li class=" <?= NavbarAction::isActive(URL::route('accountIndex')) ?> ">
 						<a href="<?= URL::route('accountIndex') ?>">Аккаунт QIWI</a>
 					</li>
