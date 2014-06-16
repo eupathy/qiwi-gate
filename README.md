@@ -118,6 +118,17 @@ Qiwi Gate Emulator
 
 	'user_id' => 'user-auth-identifier',
 
+## Использование
+
+Теперь пакет полностью готов к работе.
+
+Подробнее о работе пакета -  /qiwi/gate/about
+
+Аккаунт пользователя  - /qiwi/gate/account
+
+Таблица счетов - /qiwi/gate/account/billsTable
+
+
 ## Для разработчиков
 
 ### Workbench migrations
