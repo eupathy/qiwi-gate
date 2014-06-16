@@ -230,7 +230,6 @@ class AccountController extends BaseController
 
 		if ($validator->fails()) {
 			$result['errors'] = array(
-				'id'              => '',
 				'username'        => $userMessages->first('username'),
 				'callback'        => $userMessages->first('callback'),
 				'password'        => $userMessages->first('password'),
@@ -258,9 +257,9 @@ class AccountController extends BaseController
 
 		if ($validator->fails()) {
 			$result['errors'] = array(
-				'id'              => '',
 				'username'        => $userMessages->first('username'),
 				'callback'        => $userMessages->first('callback'),
+				'key' => $userMessages->first('key'),
 				'password'        => $userMessages->first('password'),
 				'confirmPassword' => $userMessages->first('confirmPassword'),
 			);

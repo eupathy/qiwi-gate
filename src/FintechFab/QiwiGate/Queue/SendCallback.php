@@ -29,7 +29,9 @@ class SendCallback
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERPWD, $data['merchant_id'] . ':' . $data['merchant_pass']);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-Api-Signature:' . $data['sign']));
+		if ($data['sign'] != '') {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-Api-Signature:' . $data['sign']));
+		}
 		unset($data['url'], $data['merchant_id'], $data['merchant_pass'], $data['sign']);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -68,8 +70,12 @@ class SendCallback
 		$command = 'bill';
 		$error = 0;
 		$key = $bill->merchant->key;
-		$signData = $bill->amount . '|' . $bill->bill_id . '|' . $bill->ccy . '|' . $command . '|' .
-			$bill->comment . '|' . $error . '|' . $bill->prv_name . '|' . $bill->status . '|' . $bill->user;
+		$sign = '';
+		if ('' != $key) {
+			$signData = $bill->amount . '|' . $bill->bill_id . '|' . $bill->ccy . '|' . $command . '|' .
+				$bill->comment . '|' . $error . '|' . $bill->prv_name . '|' . $bill->status . '|' . $bill->user;
+			$sign = base64_encode(hash_hmac('sha1', $signData, $key));
+		}
 		Queue::connection('ff-qiwi-gate')->push('FintechFab\QiwiGate\Queue\SendCallback', array(
 			'url'           => $bill->merchant->callback_url,
 			'merchant_id'   => $bill->merchant->id,
@@ -83,7 +89,7 @@ class SendCallback
 			'ccy'           => $bill->ccy,
 			'comment'       => $bill->comment,
 			'command' => $command,
-			'sign'    => base64_encode(hash_hmac('sha1', $signData, $key)),
+			'sign'    => $sign,
 		));
 	}
 

@@ -47,7 +47,7 @@ class Validators
 		$rules = array(
 			'username'        => 'required',
 			'callback'        => 'url',
-			'key'             => 'required|alpha_dash',
+			'key' => 'alpha_dash',
 			'password'        => 'min:4|alpha_dash',
 			'confirmPassword' => 'same:password',
 		);
