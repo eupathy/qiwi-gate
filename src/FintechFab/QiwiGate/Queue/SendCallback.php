@@ -82,14 +82,14 @@ class SendCallback
 			'merchant_pass' => $bill->merchant->password,
 			'bill_id'       => $bill->bill_id,
 			'status'        => $bill->status,
-			'error'   => $error,
+			'error'         => $error,
 			'amount'        => $bill->amount,
 			'user'          => $bill->user,
 			'prv_name'      => $bill->prv_name,
 			'ccy'           => $bill->ccy,
 			'comment'       => $bill->comment,
-			'command' => $command,
-			'sign'    => $sign,
+			'command'       => $command,
+			'sign'          => $sign,
 		));
 	}
 
