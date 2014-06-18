@@ -36,12 +36,12 @@ Qiwi Gate Emulator
 
     {
         "require": {
-	        "php": ">=5.3.0",
-	        "laravel/framework": "4.1.*",
+	        "php": ">=5.4.0",
+	        "laravel/framework": ">=4.1",
             "fintech-fab/qiwi-gate": "dev-master"
         },
 	    "require-dev": {
-		    "phpunit/phpunit": "3.7.*",
+		    "phpunit/phpunit": "4.3.*@dev"
 	    },
     }
 

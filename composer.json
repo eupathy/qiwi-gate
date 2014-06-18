@@ -6,7 +6,6 @@
 	"keywords": ["qiwi", "finance", "e-commerce", "payment", "e-shop"],
 	"homepage": "https://github.com/fintech-fab/qiwi-gate",
 	"version": "0.1",
-	"description": "",
 	"authors": [
 		{
 			"name": "Sergey Kozhuharov",
@@ -14,8 +13,8 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.0",
-		"laravel/framework": "4.1.*"
+		"php": ">=5.4.0",
+		"laravel/framework": ">=4.1"
 	},
 	"autoload": {
 		"classmap": [
