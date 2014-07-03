@@ -69,6 +69,7 @@ Qiwi Gate Emulator
 		'project' => 'your-iron-project-id',
 		'token'   => 'your-iron-token',
 		'queue'   => 'your-iron-queue',
+		'encrypt' => true,
 	),
 ),
 ```
