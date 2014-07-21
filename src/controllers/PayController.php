@@ -27,11 +27,13 @@ class PayController extends BaseController
 			return $this->make('index', array('bill' => $bill));
 		}
 
-		$error = 'Счёт не может быть оплачен.';
-
 		if (!$bill) {
 			$error = 'Счет не найден.';
+
+			return $this->make('error', array('message' => $error));
 		}
+
+		$error = 'Счёт не может быть оплачен.';
 
 		if ($bill->isExpired()) {
 			$error = 'Счёт просрочен.';

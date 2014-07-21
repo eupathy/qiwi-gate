@@ -37,22 +37,24 @@
 		<h2>Описание работы</h2>
 
 		<p>
-			Для работы с гейтом требуется авторизированный пользователь в сессии. <br>Подробнее от этом <a href="https://github.com/fintech-fab/qiwi-gate#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-id-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F-%D0%B4%D0%BB%D1%8F-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8">
+			Для работы с гейтом требуется авторизированный пользователь в сессии. <br>Подробнее от этом
+			<a href="https://github.com/fintech-fab/qiwi-gate#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-id-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F-%D0%B4%D0%BB%D1%8F-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8">
 				здесь. </a>
 		</p>
+
 		<p>
 			Этот пакет обрабатывает запросы так же как и реальная система QIWI. Используйте его чтобы протестировать
 			работу Вашего приложения с платежами. </p>
 
 		<p>
-			Callback отправляется на указанный <a href="<?= URL::route('accountIndex') ?>">в личном кабинете</a> адрес.
-		</p>
+			Callback отправляется на указанный <a href="<?= URL::route('qiwiGate_account') ?>">в личном кабинете</a>
+			адрес. </p>
 
 		<h4>Оплата счёта:</h4>
 
 		<p>
 			Оплатить счёт можно по ссылке:<br>
-			<?= URL::route('payIndex') ?>
+			<?= URL::route('qiwi_gate_payIndex') ?>
 		</p>
 
 		<p>
@@ -61,11 +63,12 @@
 
 		<p>
 			Личный кабинет провайдера:<br>
-			<a href="<?= URL::route('accountIndex') ?>"><?= URL::route('accountIndex') ?></a>
+			<a href="<?= URL::route('qiwiGate_account') ?>"><?= URL::route('qiwiGate_account') ?></a>
 		</p>
 
 		<p>
-			Таблица счетов:<br> <a href="<?= URL::route('billsTable') ?>"><?= URL::route('billsTable') ?></a>
+			Таблица счетов:<br>
+			<a href="<?= URL::route('qiwiGate_billsTable') ?>"><?= URL::route('qiwiGate_billsTable') ?></a>
 		</p>
 	</div>
 	<div class="col-md-5">

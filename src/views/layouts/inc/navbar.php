@@ -14,23 +14,41 @@ $logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAB
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?= URL::route('accountIndex') ?>">
-					<i><img class="logo-icon" src="<?= $logo ?>"></i> Qiwi Gate Emulator </a>
+				<a class="navbar-brand" href="<?= URL::route('qiwiGate_account') ?>"> <i><img class="logo-icon" src="<?= $logo ?>"></i> Qiwi Gate Emulator </a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class=" <?= NavbarAction::isActive(URL::route('aboutQiwiGate')) ?> ">
-						<a href="<?= URL::route('aboutQiwiGate') ?>">About</a>
+					<li class=" <?= NavbarAction::isActive(URL::route('qiwiGate_about')) ?> ">
+						<a href="<?= URL::route('qiwiGate_about') ?>">About Qiwi Gate</a>
 					</li>
-					<li class=" <?= NavbarAction::isActive(URL::route('accountIndex')) ?> ">
-						<a href="<?= URL::route('accountIndex') ?>">Аккаунт QIWI</a>
+					<li class=" <?= NavbarAction::isActive(URL::route('qiwiGate_account')) ?> ">
+						<a href="<?= URL::route('qiwiGate_account') ?>">Аккаунт QIWI</a>
 					</li>
-					<li class=" <?= NavbarAction::isActive(URL::route('billsTable')) ?> ">
-						<a href="<?= URL::route('billsTable') ?>">Счета</a>
+					<li class=" <?= NavbarAction::isActive(URL::route('qiwiGate_billsTable')) ?> ">
+						<a href="<?= URL::route('qiwiGate_billsTable') ?>">Счета</a>
 					</li>
-
+					<?php if (Route::has('qiwiShop_about')): ?>
+						<li>
+							<a href="<?= URL::route('qiwiShop_about') ?>">About Qiwi Shop</a>
+						</li>
+					<?php endif ?>
+					<?php if (Route::has('qiwiShop_aboutSdk')): ?>
+						<li>
+							<a href="<?= URL::route('qiwiShop_aboutSdk') ?>">About SDK</a>
+						</li>
+					<?php endif ?>
+					<?php if (Route::has('qiwiShop_createOrder')): ?>
+						<li>
+							<a href="<?= URL::route('qiwiShop_createOrder') ?>">Создать заказ</a>
+						</li>
+					<?php endif ?>
+					<?php if (Route::has('qiwiShop_ordersTable')): ?>
+						<li>
+							<a href="<?= URL::route('qiwiShop_ordersTable') ?>">Таблица заказов</a>
+						</li>
+					<?php endif ?>
 				</ul>
 
 
