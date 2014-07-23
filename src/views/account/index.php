@@ -35,6 +35,12 @@ use FintechFab\QiwiGate\Models\Merchant;
 			</div>
 
 			<div class="row">
+				<p class="col-md-6">E-mail:</p>
+
+				<p class="col-md-6" id="email"><?= $merchant->email ?></p>
+			</div>
+
+			<div class="row">
 				<p class="col-md-6">Ключ:</p>
 
 				<p class="col-md-5" id="key"><?= $merchant->key ?></p>

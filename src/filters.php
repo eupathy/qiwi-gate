@@ -25,7 +25,7 @@ Route::filter('ff.qiwi.gate.auth.basic', function () {
 
 Route::filter('ff.qiwi.gate.checkUser', function () {
 
-	$routeError = 'gateAuthError';
+	$routeError = 'qiwiGate_AuthError';
 	$routeAction = Route::current()->getAction();
 	$isErrorPage = $routeError == $routeAction['as'];
 
@@ -39,7 +39,7 @@ Route::filter('ff.qiwi.gate.checkUser', function () {
 		}
 
 	} elseif ($isErrorPage) {
-		return Redirect::route('billsTable');
+		return Redirect::route('qiwiGate_account');
 	}
 
 

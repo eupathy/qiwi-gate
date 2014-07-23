@@ -12,7 +12,7 @@
 		<h2 class="text-center">Регистрация в системе QIWI</h2>
 		<?=
 		Form::open(array(
-			'route'  => 'postAccountReg',
+			'route'  => 'qiwiGate_postAccountReg',
 			'class'  => 'form-horizontal',
 			'role'   => 'form',
 			'method' => 'post',
@@ -61,6 +61,22 @@
 				));
 				?>
 				<div class="text-danger text-center" id="errorCallback"></div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="inputEmail" class="col-sm-3 control-label">E-mail</label>
+
+			<div class="col-sm-7">
+
+				<?=
+				Form::input('email', 'email', '', array(
+					'placeholder' => 'Электронная почта',
+					'class'       => 'form-control',
+					'id'          => 'inputEmail',
+				));
+				?>
+				<div class="text-danger text-center" id="errorEmail"></div>
 			</div>
 		</div>
 

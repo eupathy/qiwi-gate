@@ -50,6 +50,19 @@ use FintechFab\QiwiGate\Models\Merchant;
 					<div id="errorCallback" class="text-danger text-center"></div>
 				</div>
 				<div class="form-group row">
+					<?= Form::label('inputEmail', 'E-mail', array('class' => 'col-sm-3 control-label')) ?>
+					<div class="col-sm-9">
+						<?=
+						Form::input('email', 'email', $merchant->email, array(
+							'placeholder' => 'Электронная почта',
+							'class'       => 'form-control',
+							'id'          => 'inputEmail',
+						));
+						?>
+					</div>
+					<div id="errorEmail" class="text-danger text-center"></div>
+				</div>
+				<div class="form-group row">
 					<?= Form::label('inputKey', 'Ключ', array('class' => 'col-sm-3 control-label')) ?>
 					<div class="col-sm-9">
 						<?=

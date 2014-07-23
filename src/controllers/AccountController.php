@@ -9,6 +9,7 @@ use FintechFab\QiwiGate\Models\Bill;
 use FintechFab\QiwiGate\Models\Merchant;
 use FintechFab\QiwiGate\Models\Refund;
 use FintechFab\QiwiGate\Queue\SendCallback;
+use FintechFab\QiwiGate\Queue\SendEmail;
 use Input;
 use Validator;
 
@@ -93,7 +94,13 @@ class AccountController extends BaseController
 		$currentMerchant = Merchant::find($user_id);
 		if ($data['oldPassword'] != $currentMerchant->password) {
 			$result['errors'] = array(
-				'oldPassword' => 'Неверный пароль',
+				'username'        => '',
+				'callback'        => '',
+				'email'           => '',
+				'key'             => '',
+				'password'        => '',
+				'confirmPassword' => '',
+				'oldPassword'     => 'Неверный пароль',
 			);
 
 			return $result;
@@ -232,6 +239,7 @@ class AccountController extends BaseController
 			$result['errors'] = array(
 				'username'        => $userMessages->first('username'),
 				'callback'        => $userMessages->first('callback'),
+				'email'           => $userMessages->first('email'),
 				'password'        => $userMessages->first('password'),
 				'confirmPassword' => $userMessages->first('confirmPassword'),
 			);
@@ -259,7 +267,8 @@ class AccountController extends BaseController
 			$result['errors'] = array(
 				'username'        => $userMessages->first('username'),
 				'callback'        => $userMessages->first('callback'),
-				'key' => $userMessages->first('key'),
+				'email'           => $userMessages->first('email'),
+				'key'             => $userMessages->first('key'),
 				'password'        => $userMessages->first('password'),
 				'confirmPassword' => $userMessages->first('confirmPassword'),
 			);
@@ -277,6 +286,7 @@ class AccountController extends BaseController
 	 */
 	public function sendCallback($bill_id)
 	{
+		SendEmail::emailToQueue($bill_id);
 		SendCallback::jobBillToQueue($bill_id);
 	}
 

@@ -34,6 +34,7 @@ class Validators
 		$rules = array(
 			'username'        => 'required',
 			'callback'        => 'url',
+			'email'           => 'email',
 			'key'             => 'alpha_dash',
 			'password'        => 'required|min:4|alpha_dash',
 			'confirmPassword' => 'required|same:password',
@@ -47,7 +48,8 @@ class Validators
 		$rules = array(
 			'username'        => 'required',
 			'callback'        => 'url',
-			'key' => 'alpha_dash',
+			'email'           => 'email',
+			'key'             => 'alpha_dash',
 			'password'        => 'min:4|alpha_dash',
 			'confirmPassword' => 'same:password',
 		);
@@ -58,12 +60,13 @@ class Validators
 	public static function messagesForErrors()
 	{
 		$rules = array(
-			'required'   => 'Поле должно быть заполнено.',
-			'regex'      => 'Некорректный формат данных.',
+			'required'   => 'Поле должно быть заполнено',
+			'regex'      => 'Некорректный формат данных',
 			'url'        => 'Некорректный адрес',
-			'min'        => 'Должен быть длиннее :min символов.',
-			'alpha_dash' => 'Только буквы, цифры, тире и подчёткивания ',
+			'min'        => 'Должен быть длиннее :min символов',
+			'alpha_dash' => 'Только буквы, цифры, тире и подчёткивания',
 			'same'       => 'Пароли не одинаковы',
+			'email'      => 'Некорректный адрес E-mail',
 		);
 
 		return $rules;

@@ -21,6 +21,7 @@ class SendCallback
 
 		if (empty($data['url'])) {
 			$job->delete();
+			Log::info('Не указан url для отправки callback.');
 
 			return;
 		}
@@ -43,7 +44,8 @@ class SendCallback
 		if (!empty($result) && strpos($result, '<result_code>0</result_code>') !== false) {
 			Log::info('Успешно вызван callback с ответом 0', array('result' => $result));
 			$job->delete();
-			die();
+
+			return;
 		}
 
 		Log::info('Результат curl:', array('result' => $result));
@@ -51,10 +53,11 @@ class SendCallback
 
 		if ($cnt > 50) {
 			$job->delete();
-			die();
+
+			return;
 		}
 
-		Log::info('Перевыставлена задача, попытка номер ' . $cnt, $data);
+		Log::info('Перевыставлена задача по отправке curl, попытка номер ' . $cnt, $data);
 		$job->release(60 * $cnt);
 
 	}
@@ -67,9 +70,10 @@ class SendCallback
 	public static function jobBillToQueue($bill_id)
 	{
 		$bill = Bill::whereBillId($bill_id)->first();
+		$merchant = $bill->merchant;
 		$command = 'bill';
 		$error = 0;
-		$key = $bill->merchant->key;
+		$key = $merchant->key;
 		$sign = '';
 		if ('' != $key) {
 			$signData = $bill->amount . '|' . $bill->bill_id . '|' . $bill->ccy . '|' . $command . '|' .
@@ -77,9 +81,9 @@ class SendCallback
 			$sign = base64_encode(hash_hmac('sha1', $signData, $key));
 		}
 		Queue::connection('ff-qiwi-gate')->push('FintechFab\QiwiGate\Queue\SendCallback', array(
-			'url'           => $bill->merchant->callback_url,
-			'merchant_id'   => $bill->merchant->id,
-			'merchant_pass' => $bill->merchant->password,
+			'url'           => $merchant->callback_url,
+			'merchant_id'   => $merchant->id,
+			'merchant_pass' => $merchant->password,
 			'bill_id'       => $bill->bill_id,
 			'status'        => $bill->status,
 			'error'         => $error,

@@ -31,52 +31,52 @@ Route::group(
 
 	function () {
 		Route::get('order/external/main.action', array(
-			'as' => 'qiwi_gate_payIndex',
+			'as'   => 'qiwi_gate_payIndex',
 			'uses' => 'PayController@index'
 		));
 
 		Route::post('order/external/main.action', array(
-			'as' => 'qiwiGate_postPay',
+			'as'   => 'qiwiGate_postPay',
 			'uses' => 'PayController@postPay'
 		));
 
 		Route::get('account', array(
-			'as' => 'qiwiGate_account',
+			'as'   => 'qiwiGate_account',
 			'uses' => 'AccountController@index'
 		));
 
 		Route::post('account', array(
-			'as' => 'qiwiGate_postAccountReg',
+			'as'   => 'qiwiGate_postAccountReg',
 			'uses' => 'AccountController@postRegistration'
 		));
 
 		Route::post('account/changeData', array(
-			'as' => 'qiwiGate_postChangeData',
+			'as'   => 'qiwiGate_postChangeData',
 			'uses' => 'AccountController@postChangeData'
 		));
 
 		Route::get('account/billsTable', array(
-			'as' => 'qiwiGate_billsTable',
+			'as'   => 'qiwiGate_billsTable',
 			'uses' => 'AccountController@billsTable'
 		));
 
 		Route::get('account/billsTable/getRefund/{bill_id}', array(
-			'as' => 'qiwiGate_GetRefundTable',
+			'as'   => 'qiwiGate_GetRefundTable',
 			'uses' => 'AccountController@GetRefundTable'
 		));
 
 		Route::post('account/billsTable/expireBill', array(
-			'as' => 'qiwiGate_postExpireBill',
+			'as'   => 'qiwiGate_postExpireBill',
 			'uses' => 'AccountController@postExpireBill'
 		));
 
 		Route::post('account/billsTable/cancelBill', array(
-			'as' => 'qiwiGate_postCancelBill',
+			'as'   => 'qiwiGate_postCancelBill',
 			'uses' => 'AccountController@postCancelBill'
 		));
 
 		Route::get('authError', array(
-			'as' => 'qiwiGate_gateAuthError',
+			'as'   => 'qiwiGate_AuthError',
 			'uses' => 'AccountController@authError',
 		));
 

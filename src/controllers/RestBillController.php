@@ -8,6 +8,7 @@ use FintechFab\QiwiGate\Components\Catalog;
 use FintechFab\QiwiGate\Components\Validators;
 use FintechFab\QiwiGate\Models\Bill;
 use FintechFab\QiwiGate\Queue\SendCallback;
+use FintechFab\QiwiGate\Queue\SendEmail;
 use Input;
 use Request;
 use Response;
@@ -188,6 +189,7 @@ class RestBillController extends Controller
 	public function sendCallback($bill_id)
 	{
 		SendCallback::jobBillToQueue($bill_id);
+		SendEmail::emailToQueue($bill_id);
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 
 use FintechFab\QiwiGate\Models\Bill;
+use FintechFab\QiwiGate\Models\Merchant;
 
 class QiwiCancelBillTest extends TestCase
 {
@@ -12,6 +13,14 @@ class QiwiCancelBillTest extends TestCase
 		parent::setUp();
 
 		// создаём счёт
+		Merchant::truncate();
+		$merchant = new Merchant;
+		$merchant->create(array(
+			'username' => 'username',
+			'password' => 'password',
+			'email'    => 'qwer@qwer.as',
+		));
+
 		Bill::truncate();
 		$bill = new Bill;
 		$bill->create(array(

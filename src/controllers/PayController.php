@@ -6,6 +6,7 @@ use DB;
 use Exception;
 use FintechFab\QiwiGate\Models\Bill;
 use FintechFab\QiwiGate\Queue\SendCallback;
+use FintechFab\QiwiGate\Queue\SendEmail;
 use Input;
 use View;
 
@@ -55,23 +56,26 @@ class PayController extends BaseController
 
 		if ($bill) {
 
-			try{
+			try {
 
-				$result = DB::connection('ff-qiwi-gate')->transaction(function() use ($bill_id){
+				$result = DB::connection('ff-qiwi-gate')->transaction(function () use ($bill_id) {
 					if (Bill::doPay($bill_id)) {
 						SendCallback::jobBillToQueue($bill_id);
+						SendEmail::emailToQueue($bill_id);
+
 						return array(
 							'message' => 'Счёт успешно оплачен.',
 						);
 					}
+
 					return null;
 				});
 
-				if($result){
+				if ($result) {
 					return $result;
 				}
 
-			}catch(Exception $e){
+			} catch (Exception $e) {
 
 			}
 
