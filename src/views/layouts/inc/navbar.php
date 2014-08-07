@@ -41,9 +41,9 @@ $logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAB
 							<a href="<?= URL::route('qiwiShop_aboutSdk') ?>">About SDK</a>
 						</li>
 					<?php endif ?>
-					<?php if (Route::has('qiwiShop_createOrder')): ?>
+					<?php if (Route::has('qiwiShop_settings')): ?>
 						<li>
-							<a href="<?= URL::route('qiwiShop_createOrder') ?>">Создать заказ</a>
+							<a href="<?= URL::route('qiwiShop_settings') ?>">Настройки</a>
 						</li>
 					<?php endif ?>
 					<?php if (Route::has('qiwiShop_ordersTable')): ?>
@@ -51,7 +51,10 @@ $logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAB
 							<a href="<?= URL::route('qiwiShop_ordersTable') ?>">Таблица заказов</a>
 						</li>
 					<?php endif ?>
-					<?php
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+				<?php
 					if (Route::has('registration')) {
 						if (Config::get('ff-qiwi-gate::user_id') > 0) {
 							?>

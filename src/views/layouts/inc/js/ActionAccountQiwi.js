@@ -8,6 +8,7 @@ $(document).ready(function () {
 		var password = $('#inputPassword').val();
 		var confirmPassword = $('#inputConfirmPassword').val();
 		var oldPassword = $('#inputOldPassword').val();
+		$('button').attr('disabled', true);
 		$.ajax({
 			type: "POST",
 			url: 'account/changeData',
@@ -20,6 +21,7 @@ $(document).ready(function () {
 				oldPassword: oldPassword
 			},
 			success: function (data) {
+				$('button').attr('disabled', false);
 				if (data['errors']) {
 					$('#errorUsername').html(data['errors']['username']);
 					$('#errorCallback').html(data['errors']['callback']);

@@ -2,6 +2,8 @@
 /**
  * @var int $user_id
  */
+
+$callbackUrl = Route::has('qiwiShop_processCallback') ? URL::route('qiwiShop_processCallback') : '';
 ?>
 <script type="application/javascript">
 	<?php require(__DIR__ . '/../layouts/inc/js/ActionAccountReg.js') ?>
@@ -10,13 +12,7 @@
 <div class="col-sm-offset-3 col-md-6 inner">
 	<div class="content">
 		<h2 class="text-center">Регистрация в системе QIWI</h2>
-		<?=
-		Form::open(array(
-			'route'  => 'qiwiGate_postAccountReg',
-			'class'  => 'form-horizontal',
-			'role'   => 'form',
-			'method' => 'post',
-		)); ?>
+
 		<div class="form-group row">
 			<label for="inputId" class="col-sm-3 control-label">Ваш ID (логин)</label>
 
@@ -54,7 +50,7 @@
 			<div class="col-sm-7">
 
 				<?=
-				Form::input('url', 'callback', '', array(
+				Form::input('url', 'callback', $callbackUrl, array(
 					'placeholder' => 'Callback',
 					'class'       => 'form-control',
 					'id'          => 'inputCallback',
@@ -137,6 +133,5 @@
 				?>
 			</div>
 		</div>
-		<?= Form::close(); ?>
 	</div>
 </div>

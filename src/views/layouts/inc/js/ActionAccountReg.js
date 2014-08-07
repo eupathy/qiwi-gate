@@ -8,6 +8,7 @@ $(document).ready(function () {
 		var key = $('#inputKey').val();
 		var password = $('#inputPassword').val();
 		var confirmPassword = $('#inputConfirmPassword').val();
+		$('button').attr('disabled', true);
 		$.ajax({
 			type: "POST",
 			url: '',
@@ -20,6 +21,7 @@ $(document).ready(function () {
 				confirmPassword: confirmPassword
 			},
 			success: function (data) {
+				$('button').attr('disabled', false);
 				if (data['errors']) {
 					$('#errorId').html(data['errors']['id']);
 					$('#errorUsername').html(data['errors']['username']);

@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	$('button#payBill').click(function () {
+		$('button').attr('disabled', true);
 		$.post('', function (data) {
-
+				$('button').attr('disabled', false);
 				if (data['error']) {
 					$('#error').html(data['message']);
 					return;
