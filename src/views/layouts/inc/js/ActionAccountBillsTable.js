@@ -10,10 +10,11 @@ $(document).ready(function () {
 			function (data) {
 				$('button').attr('disabled', false);
 				tableRefund.empty().append(data);
+				$('#table-refund-' + id).toggle();
 			}
 		);
 
-		$('#table-refund-' + id).toggle();
+
 	});
 	$('.actionBtn').click(function () {
 		var $btn = $(this);

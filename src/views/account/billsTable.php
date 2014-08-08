@@ -5,7 +5,7 @@
 use FintechFab\QiwiGate\Models\Bill;
 
 ?>
-<?= View::make('ff-qiwi-shop::qiwiShop.inc.payReturnModal') ?>
+
 <script type="application/javascript">
 	<?php require(__DIR__ . '/../layouts/inc/js/ActionAccountBillsTable.js') ?>
 </script>
