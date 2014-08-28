@@ -5,19 +5,19 @@ namespace FintechFab\QiwiGate\Models;
 use Eloquent;
 
 /**
- * @property integer $id
- * @property integer $merchant_id
- * @property integer $bill_id
- * @property string  $user
- * @property string  $amount
- * @property string  $ccy
- * @property string  $comment
- * @property string  $lifetime
- * @property string  $pay_source*
- * @property string  $prv_name
- * @property string  $status
- * @property string  $created_at
- * @property string  $updated_at
+ * @property integer   $id
+ * @property integer   $merchant_id
+ * @property integer   $bill_id
+ * @property string    $user
+ * @property string    $amount
+ * @property string    $ccy
+ * @property string    $comment
+ * @property string    $lifetime
+ * @property string    $pay_source*
+ * @property string    $prv_name
+ * @property string    $status
+ * @property string    $created_at
+ * @property string    $updated_at
  * @property Merchant  $merchant
  *
  * @method static Bill find()

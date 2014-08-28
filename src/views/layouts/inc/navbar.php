@@ -54,7 +54,7 @@ $logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAB
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-				<?php
+					<?php
 					if (Route::has('registration')) {
 						if (Config::get('ff-qiwi-gate::user_id') > 0) {
 							?>
