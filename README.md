@@ -1,15 +1,18 @@
 Qiwi Gate Emulator
 =========
 
+Демо-сервер: http://fintech-fab.ru/qiwi/gate/about
+
 Сервер эмулирует работу сервера QIWI через REST протокол.
-Обращаться к серверу QIWI можно используя пакеты эмуляции интернет магизина и SDK:
+Подробная инструкция по использованию находится в разработке.
+Обращаться к серверу QIWI можно используя пакеты демо-магизина и SDK:
 
 - QIWI-shop: https://github.com/fintech-fab/qiwi-shop
 - QIWI-SDK: https://github.com/fintech-fab/qiwi-sdk
 
 # Требования
 
-- php >=5.3.0
+- php >=5.4.0
 - Laravel Framework >= 4.1.*
 - MySQL Database
 - Laravel queue driver configuration
